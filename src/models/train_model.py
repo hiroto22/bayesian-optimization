@@ -113,3 +113,25 @@ def svr_gaussian(fold_number,autoscaled_x, autoscaled_y,y):
     model.fit(autoscaled_x, autoscaled_y)
 
     return model
+
+
+# ガウス過程回帰
+def gpr_one_kernel(kernel_number,autoscaled_x, autoscaled_y,x):
+    # カーネル 11 種類
+    kernels = [ConstantKernel() * DotProduct() + WhiteKernel(),
+            ConstantKernel() * RBF() + WhiteKernel(),
+            ConstantKernel() * RBF() + WhiteKernel() + ConstantKernel() * DotProduct(),
+            ConstantKernel() * RBF(np.ones(x.shape[1])) + WhiteKernel(),
+            ConstantKernel() * RBF(np.ones(x.shape[1])) + WhiteKernel() + ConstantKernel() * DotProduct(),
+            ConstantKernel() * Matern(nu=1.5) + WhiteKernel(),
+            ConstantKernel() * Matern(nu=1.5) + WhiteKernel() + ConstantKernel() * DotProduct(),
+            ConstantKernel() * Matern(nu=0.5) + WhiteKernel(),
+            ConstantKernel() * Matern(nu=0.5) + WhiteKernel() + ConstantKernel() * DotProduct(),
+            ConstantKernel() * Matern(nu=2.5) + WhiteKernel(),
+            ConstantKernel() * Matern(nu=2.5) + WhiteKernel() + ConstantKernel() * DotProduct()]
+
+    selected_kernel = kernels[kernel_number]
+    model = GaussianProcessRegressor(alpha=0, kernel=selected_kernel)
+    model.fit(autoscaled_x, autoscaled_y)
+
+    return model
