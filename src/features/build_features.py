@@ -1,6 +1,6 @@
 import pandas as pd
 
-# データの前処理
+
 def build_features(regression_method,x_prediction_data_path, experiment_result_data_path):
     # 選択されていないサンプルの読み込み
     x_prediction = pd.read_csv(x_prediction_data_path, index_col=0, header=0)
@@ -40,7 +40,7 @@ def build_features(regression_method,x_prediction_data_path, experiment_result_d
 
 
     
-    # 標準偏差が 0 の特徴量の削除(データの値が全て同じものを削除)
+    # 標準偏差が 0 の特徴量の削除(データの値が全て同じカラムを削除)
     deleting_variables = x.columns[x.std() == 0]
     x = x.drop(deleting_variables, axis=1)
     x_prediction.columns = x.columns

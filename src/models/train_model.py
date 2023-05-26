@@ -11,6 +11,8 @@ from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 from sklearn.neighbors import NearestNeighbors
 from scipy.stats import norm
 
+# 学習・モデルの構築
+
 # 線形重回帰
 def ols_linear(autoscaled_x, autoscaled_y,x):
     # モデル構築
@@ -21,7 +23,7 @@ def ols_linear(autoscaled_x, autoscaled_y,x):
     standard_regression_coefficients = model.coef_
     standard_regression_coefficients = pd.DataFrame(standard_regression_coefficients, index=x.columns, columns=['standard_regression_coefficients'])
     standard_regression_coefficients.to_csv(
-    './../data/result/standard_regression_coefficients_ols_linear.csv')  # csv ファイルに保存。同じ名前のファイルがあるときは上書きされますので注意してください
+    './../results/model/standard_regression_coefficients_ols_linear.csv')  # csv ファイルに保存。同じ名前のファイルがあるときは上書きされますので注意してください
 
     return model
 
@@ -36,7 +38,7 @@ def ols_nonlinear(autoscaled_x, autoscaled_y,x):
     standard_regression_coefficients = model.coef_
     standard_regression_coefficients = pd.DataFrame(standard_regression_coefficients, index=x.columns, columns=['standard_regression_coefficients'])
     standard_regression_coefficients.to_csv(
-    './../data/result/standard_regression_coefficients_ols_nonlinear.csv')  # csv ファイルに保存。同じ名前のファイルがあるときは上書きされますので注意してください
+    './../results/model/standard_regression_coefficients_ols_nonlinear.csv')  # csv ファイルに保存。同じ名前のファイルがあるときは上書きされますので注意してください
 
     return model
 
@@ -61,7 +63,7 @@ def svr_linear(fold_number,autoscaled_x, autoscaled_y,x):
     standard_regression_coefficients = pd.DataFrame(
         standard_regression_coefficients, index=x.columns, columns=['standard_regression_coefficients'])
     standard_regression_coefficients.to_csv(
-        './../data/result/standard_regression_coefficients_svr_liner.csv')  # csv ファイルに保存。同じ名前のファイルがあるときは上書きされますので注意してください
+        './../results/model/standard_regression_coefficients_svr_liner.csv')  # csv ファイルに保存。同じ名前のファイルがあるときは上書きされますので注意してください
 
     return model
 
