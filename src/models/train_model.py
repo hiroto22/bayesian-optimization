@@ -20,9 +20,23 @@ def ols_linear(autoscaled_x, autoscaled_y,x):
     standard_regression_coefficients = model.coef_
     standard_regression_coefficients = pd.DataFrame(standard_regression_coefficients, index=x.columns, columns=['standard_regression_coefficients'])
     standard_regression_coefficients.to_csv(
-    './../data/result/standard_regression_coefficients_ols_liner.csv')  # csv ファイルに保存。同じ名前のファイルがあるときは上書きされますので注意してください
+    './../data/result/standard_regression_coefficients_ols_linear.csv')  # csv ファイルに保存。同じ名前のファイルがあるときは上書きされますので注意してください
 
     return model
 
 
-    
+# 非線形重回帰
+def ols_nonlinear(autoscaled_x, autoscaled_y,x):
+    # モデル構築
+    model = LinearRegression()
+    model.fit(autoscaled_x, autoscaled_y)  # モデル構築
+
+
+    standard_regression_coefficients = model.coef_
+    standard_regression_coefficients = pd.DataFrame(standard_regression_coefficients, index=x.columns, columns=['standard_regression_coefficients'])
+    standard_regression_coefficients.to_csv(
+    './../data/result/standard_regression_coefficients_ols_nonlinear.csv')  # csv ファイルに保存。同じ名前のファイルがあるときは上書きされますので注意してください
+
+    return model
+
+   

@@ -11,7 +11,7 @@ from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 from sklearn.neighbors import NearestNeighbors
 from scipy.stats import norm
 
-def predict(fold_number, autoscaled_x, autoscaled_y, autoscaled_x_prediction,x, y, model):
+def predict(regression_method,fold_number, autoscaled_x, autoscaled_y, autoscaled_x_prediction,x, y, model):
      # クロスバリデーションの fold 数
     fold_number = fold_number
     
@@ -46,8 +46,8 @@ def predict(fold_number, autoscaled_x, autoscaled_y, autoscaled_x_prediction,x, 
     y_error_train = pd.DataFrame(y_error_train)
     y_error_train.columns = ['error_of_y(actual_y-estimated_y)']
     results_train = pd.concat([y_for_save, estimated_y, y_error_train], axis=1) # 結合
-    results_train.to_csv('./../data/result/estimated_y_in_detail_ols_liner.csv')  # 推定値を csv ファイルに保存。同じ名前のファイルがあるときは上書きされますので注意してください
-
+    results_train.to_csv('./../data/result/estimated_y_in_detail_{0}.csv'.format(regression_method))  # 推定値を csv ファイルに保存。同じ名前のファイルがあるときは上書きされますので注意してください
+    
     # クロスバリデーションによる y の値の推定
     cross_validation = KFold(n_splits=fold_number, random_state=9, shuffle=True) # クロスバリデーションの分割の設定
     autoscaled_estimated_y_in_cv = cross_val_predict(model, autoscaled_x, autoscaled_y, cv=cross_validation)  # y の推定
@@ -78,4 +78,4 @@ def predict(fold_number, autoscaled_x, autoscaled_y, autoscaled_x_prediction,x, 
     y_error_in_cv = pd.DataFrame(y_error_in_cv)
     y_error_in_cv.columns = ['error_of_y(actual_y-estimated_y)']
     results_in_cv = pd.concat([y_for_save, estimated_y_in_cv, y_error_in_cv], axis=1) # 結合
-    results_in_cv.to_csv('./../data/result/estimated_y_in_cv_in_detail_ols_liner.csv')  # 推定値を csv ファイルに保存。同じ名前のファイルがあるときは上書きされますので注意してください
+    results_in_cv.to_csv('./../data/result/estimated_y_in_cv_in_detail_{0}.csv'.format(regression_method))  # 推定値を csv ファイルに保存。同じ名前のファイルがあるときは上書きされますので注意してください
