@@ -135,3 +135,44 @@ def gpr_one_kernel(kernel_number,autoscaled_x, autoscaled_y,x):
     model.fit(autoscaled_x, autoscaled_y)
 
     return model
+
+# ガウス過程回帰
+def gpr_kernels(fold_number, autoscaled_x, autoscaled_y, x, y):
+    # カーネル 11 種類
+    kernels = [ConstantKernel() * DotProduct() + WhiteKernel(),
+           ConstantKernel() * RBF() + WhiteKernel(),
+           ConstantKernel() * RBF() + WhiteKernel() + ConstantKernel() * DotProduct(),
+           ConstantKernel() * RBF(np.ones(x.shape[1])) + WhiteKernel(),
+           ConstantKernel() *
+           RBF(np.ones(x.shape[1])) + WhiteKernel() +
+           ConstantKernel() * DotProduct(),
+           ConstantKernel() * Matern(nu=1.5) + WhiteKernel(),
+           ConstantKernel() * Matern(nu=1.5) + WhiteKernel() +
+           ConstantKernel() * DotProduct(),
+           ConstantKernel() * Matern(nu=0.5) + WhiteKernel(),
+           ConstantKernel() * Matern(nu=0.5) + WhiteKernel() +
+           ConstantKernel() * DotProduct(),
+           ConstantKernel() * Matern(nu=2.5) + WhiteKernel(),
+           ConstantKernel() * Matern(nu=2.5) + WhiteKernel() + ConstantKernel() * DotProduct()]
+    
+    # クロスバリデーションによるカーネル関数の最適化
+    cross_validation = KFold(n_splits=fold_number, random_state=9, shuffle=True) # クロスバリデーションの分割の設定
+    r2cvs = [] # 空の list。主成分の数ごとに、クロスバリデーション後の r2 を入れていく
+    for index, kernel in enumerate(kernels):
+        print(index + 1, '/', len(kernels))
+        model = GaussianProcessRegressor(alpha=0, kernel=kernel)
+        estimated_y_in_cv = np.ndarray.flatten(cross_val_predict(model, autoscaled_x, autoscaled_y, cv=cross_validation))
+        estimated_y_in_cv = estimated_y_in_cv * y.std(ddof=1) + y.mean()
+        r2cvs.append(r2_score(y, estimated_y_in_cv))
+    optimal_kernel_number = np.where(r2cvs == np.max(r2cvs))[0][0]  # クロスバリデーション後の r2 が最も大きいカーネル関数の番号
+    optimal_kernel = kernels[optimal_kernel_number]  # クロスバリデーション後の r2 が最も大きいカーネル関数
+    print('クロスバリデーションで選択されたカーネル関数の番号 :', optimal_kernel_number)
+    print('クロスバリデーションで選択されたカーネル関数 :', optimal_kernel)
+
+    # モデル構築
+    model = GaussianProcessRegressor(alpha=0, kernel=optimal_kernel) # GPR モデルの宣言
+
+    model.fit(autoscaled_x, autoscaled_y)  # モデル構築
+
+    return model
+    
