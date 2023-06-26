@@ -3,7 +3,10 @@ baysian-optimization
 
 Using baysian-optimazation for cell free 
 
-Project Organization
+
+
+<h2>ディレクトリ構成</h2>
+<p>参考:<a href="http://drivendata.github.io/cookiecutter-data-science/">http://drivendata.github.io/cookiecutter-data-science/</a></p>
 ------------
 
     ├── LICENSE
