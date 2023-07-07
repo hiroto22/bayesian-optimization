@@ -12,7 +12,6 @@ from sklearn.neighbors import NearestNeighbors
 from scipy.stats import norm
 
 # 学習・モデルの構築
-
 # 線形重回帰
 def ols_linear(autoscaled_x, autoscaled_y,x):
     # モデル構築

@@ -51,4 +51,4 @@ def build_features(regression_method,x_prediction_data_path, experiment_result_d
     autoscaled_x = (x - x.mean()) / x.std()
     autoscaled_x_prediction = (x_prediction - x.mean()) / x.std()
 
-    return x,y,autoscaled_x, autoscaled_y, autoscaled_x_prediction
+    return x,y,autoscaled_x, autoscaled_y, autoscaled_x_prediction, x_prediction
