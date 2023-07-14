@@ -14,7 +14,7 @@ def build_samples(number_of_generating_samples, desired_sum_of_components, setti
     # 0 から 1 の間の一様乱数でサンプル生成
     x_generated = np.random.rand(number_of_generating_samples, setting_of_generation.shape[1])
 
-    # # 上限・下限の設定
+    #　上限・下限の設定
     x_upper = setting_of_generation.iloc[0, :]  # 上限値
     x_lower = setting_of_generation.iloc[1, :]  # 下限値
     x_generated = x_generated * (x_upper.values - x_lower.values) + x_lower.values  # 上限値から下限値までの間に変換
