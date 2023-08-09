@@ -11,7 +11,7 @@ from sklearn.neighbors import NearestNeighbors
 
 # AD
 # ad_method: knn ocsvm
-def ad(ad_method, autoscaled_x, x, x_prediction, autoscaled_x_prediction, k_in_knn, rate_of_training_samples_inside_ad, estimated_y_prediction, ocsvm_gamma, ocsvm_gammas, ocsvm_nu):
+def ad(regression_method, ad_method, autoscaled_x, x, x_prediction, autoscaled_x_prediction, k_in_knn, rate_of_training_samples_inside_ad, estimated_y_prediction, ocsvm_gamma, ocsvm_gammas, ocsvm_nu):
     if ad_method == 'knn':
         ad_model = NearestNeighbors(n_neighbors=k_in_knn, metric='euclidean')
         ad_model.fit(autoscaled_x)
@@ -79,5 +79,13 @@ def ad(ad_method, autoscaled_x, x, x_prediction, autoscaled_x_prediction, k_in_k
         inside_ad_flag_prediction = ad_index_prediction >= 0
 
     estimated_y_prediction[np.logical_not(inside_ad_flag_prediction)] = -10 ** 10 # AD 外の候補においては負に非常に大きい値を代入し、次の候補として選ばれないようにします
+
+    inside_ad_flag_train.columns = ['inside_ad_flag']
+    inside_ad_flag_train.to_csv('inside_ad_flag_train_{0}.csv'.format(ad_method))  # csv ファイルに保存。同じ名前のファイルがあるときは上書きされるため注意
+    inside_ad_flag_prediction.columns = ['inside_ad_flag']
+    inside_ad_flag_prediction.to_csv('inside_ad_flag_prediction_{0}.csv'.format(ad_method))  # csv ファイルに保存。同じ名前のファイルがあるときは上書きされるため注意
+    ad_index_prediction.to_csv('ad_index_prediction_{0}.csv'.format(ad_method))  # csv ファイルに保存。同じ名前のファイルがあるときは上書きされるため注意
+    estimated_y_prediction.to_csv('estimated_y_prediction_considering_ad_{0}_{1}.csv'.format(regression_method, ad_method)) # csv ファイルに保存。同じ名前のファイルがあるときは上書きされますので注意してください
+
 
     return inside_ad_flag_prediction, estimated_y_prediction
