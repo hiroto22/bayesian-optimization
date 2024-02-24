@@ -6,53 +6,34 @@ Using baysian-optimazation for cell free
 
 
 <h2>ディレクトリ構成</h2>
-<p>参考:<a href="http://drivendata.github.io/cookiecutter-data-science/">http://drivendata.github.io/cookiecutter-data-science/</a></p>
+
 ------------
 
-    ├── LICENSE
-    ├── Makefile           <- Makefile with commands like `make data` or `make train`
-    ├── README.md          <- The top-level README for developers using this project.
+    ├── .vscode
+    ├── analysis                       　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　<- データ分析用のコード
+    ├── bayesian_optimization          　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　<- 次の実験候補を選択するために使われるコード。初回候補をD最適基準で選ぶためのコードもここにある
+    ├── build_samples                                              <- 実験候補を作成するためのコード
     ├── data
-    │   ├── external       <- Data from third party sources.
-    │   ├── interim        <- Intermediate data that has been transformed.
-    │   ├── processed      <- The final, canonical data sets for modeling.
-    │   └── raw            <- The original, immutable data dump.
+    │   ├── acuisiton_function_prediction                          <- 獲得関数の計算結果
+    │   ├── estimated_y_prediction_gpr_one_kernel                  <- 発現量の予測値
+    │   ├── estimated_y_prediction_gpr_one_kernel_std              <- 発現量の予測値の標準偏差
+    │　　  ├── old_data                                               <- 最初の頃使用していたが失敗したため使っていないデータ
+    │   ├── remaining_samples                                      <- 実験ごとに未使用の実験候補を保存する
+    │   ├── result                                                 <- 毎回の実験結果を保存する
+    │   ├── next_samples                                           <- 選択された次の実験候補
+    │   ├── generated_samples.csv                                  <- build_samplesで作成された実験候補
+    │   └──  result.csv                                            <- 全ラウンドの実験結果を一つのファイルにまとめたもの   
     │
-    ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
-    │
-    ├── models             <- Trained and serialized models, model predictions, or model summaries
-    │
-    ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-    │                         the creator's initials, and a short `-` delimited description, e.g.
-    │                         `1.0-jqp-initial-data-exploration`.
-    │
-    ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-    │
-    ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-    │   └── figures        <- Generated graphics and figures to be used in reporting
-    │
-    ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-    │                         generated with `pip freeze > requirements.txt`
-    │
-    ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
-    ├── src                <- Source code for use in this project.
-    │   ├── __init__.py    <- Makes src a Python module
-    │   │
-    │   ├── data           <- Scripts to download or generate data
-    │   │   └── make_dataset.py
-    │   │
-    │   ├── features       <- Scripts to turn raw data into features for modeling
-    │   │   └── build_features.py
-    │   │
-    │   ├── models         <- Scripts to train models and then use trained models to make
-    │   │   │                 predictions
-    │   │   ├── predict_model.py
-    │   │   └── train_model.py
-    │   │
-    │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
-    │       └── visualize.py
-    │
-    └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
+    ├── env 
+    ├── .env
+    ├── .gitignore
+    ├── LICENSE
+    ├── Makefile
+    ├── README.md
+    ├── requirements.txt
+    ├── setup.py
+    ├── test_environment.py
+    └── tox.ini            
 
 
 --------
